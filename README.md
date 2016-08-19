@@ -13,37 +13,26 @@ here is all you need:
 3. Username
 4. Password
 
-## Build
-
-    docker build -t ubergarm/l2tp-ipsec-vpn-client .
-
-## Config
-Setup the config or rebuild to suite your needs:
-
-#### 1. `/etc/ipsec.conf`
-Replace the IPV4 address of your VPN server in here.
-
-#### 2. `/etc/ipsec.secrets`
-Replace the shared pass key in here.
-
-#### 3. `/etc/xl2tpd/xl2tpd.conf`
-Replace the IPV4 address of your VPN server in here.
-
-#### 4. `/etc/ppp/options.l2tpd.client`
-Replace your username@hostname.com and password in here.
-
 ## Run
+Setup environment variables for your credentials and config:
+
+    export VPN_SERVER_IPV4='1.2.3.4'
+    export VPN_PSK='my pre shared key'
+    export VPN_USERNAME='myuser@myhost.com'
+    export VPN_PASSWORD='mypass'
+
+Now run it (you can daemonize of course after debugging):
 
     docker run --rm -it --privileged --net=host \
                -v /lib/modules:/lib/modules:ro \
-               -v `pwd`/ipsec.conf:/etc/ipsec.conf \
-               -v `pwd`/ipsec.secrets:/etc/ipsec.secrets \
-               -v `pwd`/xl2tpd.conf:/etc/xl2tpd/xl2tpd.conf \
-               -v `pwd`/options.l2tpd.client:/etc/ppp/options.l2tpd.client \
+               -e VPN_SERVER_IPV4 \
+               -e VPN_PSK \
+               -e VPN_USERNAME \
+               -e VPN_PASSWORD \
                   ubergarm/l2tp-ipsec-vpn-client
 
 ## Route
-From the host machine run these commands:
+From the host machine configure traffic to route through VPN link:
 
     # confirm the ppp0 link and get the peer e.g. (192.0.2.1) IPV4 address
     ip a show ppp0
@@ -67,8 +56,8 @@ You can see if your IP address changes after adding appropriate routes e.g.:
 - [x] `ipsec` connection works
 - [x] `xl2tpd` ppp0 device creates
 - [x] Can forward traffic through tunnel from host
-- [ ] Pass in credentials as environment variables
-- [ ] Dynamically template out the default config files with `sed` on start
+- [x] Pass in credentials as environment variables
+- [x] Dynamically template out the default config files with `sed` on start
 - [ ] See if this can work without privileged and net=host modes to be more portable
 
 ## References

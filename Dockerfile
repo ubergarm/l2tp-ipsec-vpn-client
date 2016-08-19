@@ -1,6 +1,5 @@
 FROM alpine:3.4
 
-# Default to UTF-8 file.encoding
 ENV LANG C.UTF-8
 
 RUN set -x && \
@@ -11,6 +10,10 @@ RUN set -x && \
     && mkdir -p /var/run/xl2tpd \
     && touch /var/run/xl2tpd/l2tp-control
 
+COPY ipsec.conf /etc/ipsec.conf
+COPY ipsec.secrets /etc/ipsec.secrets
+COPY xl2tpd.conf /etc/xl2tpd/xl2tpd.conf
+COPY options.l2tpd.client /etc/ppp/options.l2tpd.client
 COPY startup.sh /
 
 CMD ["/startup.sh"]
