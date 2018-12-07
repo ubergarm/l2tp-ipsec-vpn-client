@@ -1,8 +1,8 @@
 #!/bin/sh
 
-source /mnt/secrets/vpn.env
 set -e
 set -o nounset
+source ${SECRET_FOLDER}/vpn.env
 
 # template out all the config files using env vars
 sed -i 's/right=.*/right='$VPN_SERVER_IPV4'/' /etc/ipsec.conf
