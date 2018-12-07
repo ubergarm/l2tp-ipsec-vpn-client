@@ -23,4 +23,4 @@ sleep 2
 
 # startup xl2tpd ppp daemon then send it a connect command
 (sleep 10 && echo "c myVPN" > /var/run/xl2tpd/l2tp-control) &
-/usr/sbin/xl2tpd -p /var/run/xl2tpd.pid -c /etc/xl2tpd/xl2tpd.conf -C /var/run/xl2tpd/l2tp-control -D
+exec /usr/sbin/xl2tpd -p /var/run/xl2tpd.pid -c /etc/xl2tpd/xl2tpd.conf -C /var/run/xl2tpd/l2tp-control -D
