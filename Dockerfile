@@ -1,12 +1,15 @@
 FROM alpine:3.4
 
 ENV LANG C.UTF-8
+RUN apk update
 
 RUN set -x && \
     apk add --no-cache \
               strongswan \
               xl2tpd \
               ppp \
+              openssh \
+              iputils \
     && mkdir -p /var/run/xl2tpd \
     && touch /var/run/xl2tpd/l2tp-control
 
