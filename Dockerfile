@@ -1,10 +1,11 @@
-FROM alpine:3.4
+FROM alpine:3.8
 
 ENV LANG C.UTF-8
 
 RUN set -x && \
     apk add --no-cache \
-              strongswan \
+              openrc \
+              libreswan \
               xl2tpd \
               ppp \
     && mkdir -p /var/run/xl2tpd \

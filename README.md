@@ -60,7 +60,9 @@ You can see if your IP address changes after adding appropriate routes e.g.:
 - [x] Can forward traffic through tunnel from host
 - [x] Pass in credentials as environment variables
 - [x] Dynamically template out the default config files with `sed` on start
+- [x] Update to use `libreswan` instead of `strongswan`
 - [ ] See if this can work without privileged and net=host modes to be more portable
 
 ## References
-[L2TP / IPsec VPN on Ubuntu 16.04](http://www.jasonernst.com/2016/06/21/l2tp-ipsec-vpn-on-ubuntu-16-04/)
+* [libreswan reference config](https://libreswan.org/wiki/VPN_server_for_remote_clients_using_IKEv1_with_L2TP)
+* [Useful Config Example](https://lists.libreswan.org/pipermail/swan/2016/001921.html)
