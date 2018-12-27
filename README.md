@@ -66,3 +66,4 @@ You can see if your IP address changes after adding appropriate routes e.g.:
 ## References
 * [libreswan reference config](https://libreswan.org/wiki/VPN_server_for_remote_clients_using_IKEv1_with_L2TP)
 * [Useful Config Example](https://lists.libreswan.org/pipermail/swan/2016/001921.html)
+* [NetDev0x12 IPSEC and IKE Tutorial](https://youtu.be/7oldcYljp4U?t=1586)
