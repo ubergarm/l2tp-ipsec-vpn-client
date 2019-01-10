@@ -54,6 +54,20 @@ You can see if your IP address changes after adding appropriate routes e.g.:
 
     curl icanhazip.com
 
+## Debugging
+On your VPN client localhost machine you may need to `sudo modprobe af_key`
+if you're getting this error when starting:
+```
+pluto[17]: No XFRM/NETKEY kernel interface detected
+pluto[17]: seccomp security for crypto helper not supported
+```
+
+## Strongswan
+The previous `strongswan` based version of this docker image is still available on docker hub here:
+```bash
+docker pull ubergarm/l2tp-ipsec-vpn-client:strongswan
+```
+
 ## TODO
 - [x] `ipsec` connection works
 - [x] `xl2tpd` ppp0 device creates
@@ -66,4 +80,5 @@ You can see if your IP address changes after adding appropriate routes e.g.:
 ## References
 * [libreswan reference config](https://libreswan.org/wiki/VPN_server_for_remote_clients_using_IKEv1_with_L2TP)
 * [Useful Config Example](https://lists.libreswan.org/pipermail/swan/2016/001921.html)
+* [libreswan and Cisco ASA 5500](https://sgros.blogspot.com/2013/08/getting-libreswan-connect-to-cisco-asa.html)
 * [NetDev0x12 IPSEC and IKE Tutorial](https://youtu.be/7oldcYljp4U?t=1586)
