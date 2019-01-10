@@ -78,6 +78,7 @@ docker pull ubergarm/l2tp-ipsec-vpn-client:strongswan
 - [ ] See if this can work without privileged and net=host modes to be more portable
 
 ## References
+* [royhills/ike-scan](https://github.com/royhills/ike-scan)
 * [libreswan reference config](https://libreswan.org/wiki/VPN_server_for_remote_clients_using_IKEv1_with_L2TP)
 * [Useful Config Example](https://lists.libreswan.org/pipermail/swan/2016/001921.html)
 * [libreswan and Cisco ASA 5500](https://sgros.blogspot.com/2013/08/getting-libreswan-connect-to-cisco-asa.html)

@@ -10,16 +10,16 @@ sed -i 's/password .*/password '$VPN_PASSWORD'/' /etc/ppp/options.l2tpd.client
 # startup ipsec tunnel
 ipsec initnss
 sleep 1
-ipsec pluto
-sleep 1
-ipsec setup start
-sleep 1
-ipsec auto --add L2TP-PSK
-sleep 1
-ipsec auto --up L2TP-PSK
-sleep 2
-ipsec --status
+ipsec pluto --stderrlog --config /etc/ipsec.conf
 sleep 5
+#ipsec setup start
+#sleep 1
+#ipsec auto --add L2TP-PSK
+#sleep 1
+ipsec auto --up L2TP-PSK
+sleep 3
+ipsec --status
+sleep 3
 
 # startup xl2tpd ppp daemon then send it a connect command
 (sleep 5 && echo "c myVPN" > /var/run/xl2tpd/l2tp-control) &
