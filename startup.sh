@@ -7,6 +7,8 @@ sed -i 's/lns = .*/lns = '$VPN_SERVER_IPV4'/' /etc/xl2tpd/xl2tpd.conf
 sed -i 's/name .*/name '$VPN_USERNAME'/' /etc/ppp/options.l2tpd.client
 sed -i 's/password .*/password '$VPN_PASSWORD'/' /etc/ppp/options.l2tpd.client
 
+# If there is still a pid-file in the container from last run, delete it to
+# enable clean start.
 rm -f /var/run/pluto/pluto.pid
 
 # startup ipsec tunnel
