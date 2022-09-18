@@ -14,6 +14,7 @@ here is all you need:
 2. Pre Shared Key
 3. Username
 4. Password
+5. Optionally, list of networks to route through VPN
 
 ## Run
 Setup environment variables for your credentials and config:
@@ -22,6 +23,7 @@ Setup environment variables for your credentials and config:
     export VPN_PSK='my pre shared key'
     export VPN_USERNAME='myuser@myhost.com'
     export VPN_PASSWORD='mypass'
+    export VPN_ROUTES='10.0.0.0/8+172.16.0.0/12+...' (separated by '+')
 
 Now run it (you can daemonize of course after debugging):
 
@@ -31,23 +33,21 @@ Now run it (you can daemonize of course after debugging):
                -e VPN_PSK \
                -e VPN_USERNAME \
                -e VPN_PASSWORD \
+               -e VPN_ROUTES \
                   ubergarm/l2tp-ipsec-vpn-client
 
 ## Route
-From the host machine configure traffic to route through VPN link:
+Routes to destinations listed in VPN\_ROUTES are added automatically.
+This fails if there is an existing route to named destination.
+To add a route through VPN along with existing one,
+assign a unique metric to existing route before starting VPN container.
+For example, to effectively replace and then restore default route:
 
-    # confirm the ppp0 link and get the peer e.g. (192.0.2.1) IPV4 address
-    ip a show ppp0
-    # route traffic for a specific target ip through VPN tunnel address
-    sudo ip route add 1.2.3.4 via 192.0.2.1 dev ppp0
-    # route all traffice through VPN tunnel address
-    sudo ip route add default via 192.0.2.1 dev ppp0
-    # or
-    sudo route add -net default gw 192.0.2.1 dev ppp0
-    # and delete old default routes e.g.
+    # list current route
+    ip route show default
+    # change metric for current route
+    sudo route add -net default gw 10.0.1.1 dev eth0 metric 100
     sudo route del -net default gw 10.0.1.1 dev eth0
-    # when your done add your normal routes and delete the VPN routes
-    # or just `docker stop` and you'll probably be okay
 
 ## Test
 You can see if your IP address changes after adding appropriate routes e.g.:

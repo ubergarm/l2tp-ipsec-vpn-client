@@ -6,6 +6,11 @@ echo ': PSK "'$VPN_PSK'"' > /etc/ipsec.secrets
 sed -i 's/lns = .*/lns = '$VPN_SERVER_IPV4'/' /etc/xl2tpd/xl2tpd.conf
 sed -i 's/name .*/name '$VPN_USERNAME'/' /etc/ppp/options.l2tpd.client
 sed -i 's/password .*/password '$VPN_PASSWORD'/' /etc/ppp/options.l2tpd.client
+if [ -n "$VPN_ROUTES" ] ; then
+    VPN_ROUTES_ESCAPED=$(echo $VPN_ROUTES | sed 's/\//\\\//g')
+    sed -i 's/ipparam .*/ipparam routes='$VPN_ROUTES_ESCAPED'/' \
+        /etc/ppp/options.l2tpd.client
+fi
 
 # startup ipsec tunnel
 ipsec initnss

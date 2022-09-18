@@ -13,3 +13,4 @@ debug
 connect-delay 5000
 name myuser@myhost.com
 password myuserpassword
+ipparam none
