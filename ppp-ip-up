@@ -1,0 +1,32 @@
+#!/bin/sh
+#
+# ppp ip-up hook for l2tp client docker container
+
+PPP_IFACE="$1"
+PPP_TTY="$2"
+PPP_SPEED="$3"
+PPP_LOCAL="$4"
+PPP_REMOTE="$5"
+PPP_IPPARAM="$6"
+
+# parse ipparam routes=x.x.x.x/y+a.a.a.a/b+...
+if [ -n "$PPP_IPPARAM" ] ; then
+    OFS="$IFS"
+    IFS=,
+    for p in $PPP_IPPARAM ; do
+        k=`echo $p | cut -d = -f 1`
+        v=`echo $p | cut -d = -f 2`
+        eval "export $k=\"$v\""
+    done
+    IFS=$OFS
+fi
+
+# install routes
+if [ -n "$routes" -a -n "$PPP_REMOTE" -a -n "$PPP_IFACE" ] ; then
+    OFS="$IFS"
+    IFS="+"
+    for ro in $routes ; do
+        ip ro add "$ro" via "$PPP_REMOTE" dev "$PPP_IFACE"
+    done
+    IFS="$OFS"
+fi
